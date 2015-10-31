@@ -20,13 +20,13 @@ def new_match_file(patten):
     return decoretor
 
 
-@new_match_file('test.*')
-def match_file(*args):
-    pat = re.compile(args[0])
-    if re.match(pat, os.path.split(args[1])[1]):
-        return L.append(args[1])
-
-
-
-dir('.', match_file)
+#@new_match_file('test.*')
+def match_file(top, patt=''):
+    def func(top, patten=patt):
+        pat = re.compile(patten)
+        print patten,'-'
+        if re.match(pat, os.path.split(top)[1]):
+            L.append(top)
+    return func
+dir('.', match_file('.','test.*'))
 print L
