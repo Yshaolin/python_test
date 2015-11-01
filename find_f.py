@@ -2,7 +2,10 @@
 #-- coding:utf-8 --
 
 import os
-import os.path, re, sys
+import os.path
+import re
+import sys
+from multiprocessing import Process
 
 L = []
 def dir(top):
@@ -22,17 +25,13 @@ def dir(top):
 
 
 #@new_match_file('test.*')
-def match_file(top, patt=''):
-    def func(top, patten=patt):
-        pat = re.compile(patten)
-        if re.match(pat, os.path.split(top)[1]):
-            L.append(top)
-    return func
+def match_file(top, patten=''):
+    pat = re.compile(patten)
+    if re.match(pat, os.path.split(top)[1]):
+        print top
 
-f = match_file('.', 'test.*')
-
-x = dir('.')
+x = dir('/home/ubuntu-4118/Documents')
 for i in x:
-    f(i)
-
+    p = Process(target=match_file, args=(i,'test.*'))
+    p.start()
 print L
